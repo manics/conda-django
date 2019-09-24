@@ -1,0 +1,82 @@
+{% set name = "Django" %}
+{% set version = "1.8.19" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}{{ environ.get('VERSION_SUFFIX', '') }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "33d44a5cf9d333247a9a374ae1478b78b83c9b78eb316fc04adde62053b4c047"
+
+build:
+  noarch: python
+  number: 0
+  entry_points:
+    - django-admin = django.core.management:execute_from_command_line
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+  script_env:
+    - VERSION_SUFFIX
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  # imports:
+  #   - django
+  #   - django.apps
+  #   - django.conf
+  #   - django.contrib
+  #   - django.contrib.admin
+  #   - django.contrib.admindocs
+  #   - django.contrib.auth
+  #   - django.contrib.contenttypes
+  #   - django.contrib.flatpages
+  #   - django.contrib.gis
+  #   - django.contrib.humanize
+  #   - django.contrib.messages
+  #   - django.contrib.postgres
+  #   - django.contrib.redirects
+  #   - django.contrib.sessions
+  #   - django.contrib.sitemaps
+  #   - django.contrib.sites
+  #   - django.contrib.staticfiles
+  #   - django.contrib.syndication
+  #   - django.contrib.webdesign
+  #   - django.core
+  #   - django.core.cache
+  #   - django.core.checks
+  #   - django.core.files
+  #   - django.core.handlers
+  #   - django.core.mail
+  #   - django.core.management
+  #   - django.core.serializers
+  #   - django.core.servers
+  #   - django.db
+  #   - django.dispatch
+  #   - django.forms
+  #   - django.http
+  #   - django.middleware
+  #   - django.template
+  #   - django.test
+  #   - django.utils
+  #   - django.views
+  commands:
+    - django-admin --help
+
+about:
+  home: "http://www.djangoproject.com/"
+  license: "BSD"
+  license_family: "BSD"
+  license_file: ""
+  summary: "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - ome
